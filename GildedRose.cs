@@ -39,6 +39,21 @@ namespace csharp
                         item.Quality = 0;
                     }
                 }
+                else if (IsAgedBrie(item))
+                {
+                    item.SellIn--;
+                    item.Quality++;
+
+                    if (item.SellIn <= 0)
+                    {
+                        item.Quality++;
+                    }
+
+                    if (item.Quality > MaximumQuality)
+                    {
+                        item.Quality = MaximumQuality;
+                    }
+                }
 
                 else
                 {
