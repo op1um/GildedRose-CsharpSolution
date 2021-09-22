@@ -94,5 +94,13 @@ namespace GildedRoseTests
             var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 10, 20);
             Assert.AreEqual(22, item.Quality);
         }
+
+        /* Checking if Backstage passes quality drops to 0 after the show */
+        [Test]
+        public void BackstagePasses_AfterTheConcert_QualityDropsTo0()
+        {
+            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 0, 20);
+            Assert.AreEqual(0, item.Quality);
+        }
     }
 }
