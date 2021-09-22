@@ -24,69 +24,26 @@ namespace csharp
             {
                 Item item = Items[i];
 
-                if (isRegular(item))
+                if (IsRegular(item))
                 {
-                    item.SellIn--;
-                    item.Quality--;
-
-                    if (item.SellIn <= 0)
-                    {
-                        item.Quality--;
-                    }
-
-                    if (item.Quality < 0)
-                    {
-                        item.Quality = 0;
-                    }
+                    ManageRegularItem(item);
                 }
                 else if (IsAgedBrie(item))
                 {
-                    item.SellIn--;
-                    item.Quality++;
-
-                    if (item.SellIn <= 0)
-                    {
-                        item.Quality++;
-                    }
-
-                    if (item.Quality > MaximumQuality)
-                    {
-                        item.Quality = MaximumQuality;
-                    }
+                    ManageAgedBrie(item);
                 }
                 else if (IsBackstagePasses(item))
                 {
-                    item.SellIn--;
-                    item.Quality++;
-
-                    if (item.SellIn < BackstagePassesFirstThreshold)
-                    {
-                        item.Quality++;
-                    }
-
-                    if (item.SellIn < BackstagePassesSecondThreshold)
-                    {
-                        item.Quality++;
-                    }
-
-                    if (item.SellIn <= 0)
-                    {
-                        item.Quality = 0;
-                    }
-
-                    if (item.Quality > MaximumQuality)
-                    {
-                        item.Quality = MaximumQuality;
-                    }
+                    ManageBackstagePasses(item);
                 }
                 else if (IsSulfuras(item))
                 {
-                    item.SellIn--;
+                    ManageSulfuras(item);
                 }
             }
         }
 
-        private static bool isRegular(Item item)
+        private static bool IsRegular(Item item)
         {
             return !(IsAgedBrie(item) || IsBackstagePasses(item) || IsSulfuras(item));
         }
@@ -104,6 +61,69 @@ namespace csharp
         private static bool IsBackstagePasses(Item item)
         {
             return item.Name.Equals(BackstagePasses);
+        }
+
+        private static void ManageRegularItem(Item item)
+        {
+            item.SellIn--;
+            item.Quality--;
+
+            if (item.SellIn <= 0)
+            {
+                item.Quality--;
+            }
+
+            if (item.Quality < 0)
+            {
+                item.Quality = 0;
+            }
+        }
+
+        private static void ManageAgedBrie(Item item)
+        {
+            item.SellIn--;
+            item.Quality++;
+
+            if (item.SellIn <= 0)
+            {
+                item.Quality++;
+            }
+
+            if (item.Quality > MaximumQuality)
+            {
+                item.Quality = MaximumQuality;
+            }
+        }
+
+        private static void ManageBackstagePasses(Item item)
+        {
+            item.SellIn--;
+            item.Quality++;
+
+            if (item.SellIn < BackstagePassesFirstThreshold)
+            {
+                item.Quality++;
+            }
+
+            if (item.SellIn < BackstagePassesSecondThreshold)
+            {
+                item.Quality++;
+            }
+
+            if (item.SellIn <= 0)
+            {
+                item.Quality = 0;
+            }
+
+            if (item.Quality > MaximumQuality)
+            {
+                item.Quality = MaximumQuality;
+            }
+        }
+
+        private static void ManageSulfuras(Item item)
+        {
+            item.SellIn--;
         }
     }
 }
