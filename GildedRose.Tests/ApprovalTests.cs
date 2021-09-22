@@ -39,9 +39,9 @@ namespace GildedRoseTests
             Assert.AreEqual(24, item.Quality);
         }
 
-        /* Checking if the quality degrades twice as fast once the sellIn is past */
+        /* Checking if the quality degrades twice as fast once the sellIn is passed */
         [Test]
-        public void RegularItem_PastSellIn_QualityLowerTwice()
+        public void RegularItem_passedSellIn_QualityLowerTwice()
         {
             var item = CreateAndUpdateItem("regularItem", 0, 25);
             Assert.AreEqual(23, item.Quality);
@@ -105,12 +105,28 @@ namespace GildedRoseTests
 
         /* With only 92% test coverage, we need to create some additional tests to check some particular case */
 
-        /* Checking if the quality of the Aged Brie increases with time */
+        /* Checking if the quality of the Aged Brie Increase twice once SellIn is passed */
         [Test]
-        public void AgedBrie_PastSellIn_QualityIncreaseTwice()
+        public void AgedBrie_PassedSellIn_QualityIncreaseTwice()
         {
             var item = CreateAndUpdateItem("Aged Brie", 0, 10);
             Assert.AreEqual(12, item.Quality);
+        }
+
+        /* Checking if Backstage passes quality increases twice 10 days before the show */
+        [Test]
+        public void BackstagePasses_10DaysBeforeTheConcert_QualityCantBeMoreThan50()
+        {
+            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 10, 49);
+            Assert.AreEqual(50, item.Quality);
+        }
+
+        /* Checking if Backstage passes quality increases twice 10 days before the show */
+        [Test]
+        public void BackstagePasses_5DaysBeforeTheConcert_QualityIncreaseThrice()
+        {
+            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 5, 20);
+            Assert.AreEqual(23, item.Quality);
         }
     }
 }
