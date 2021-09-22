@@ -24,22 +24,10 @@ namespace csharp
             {
                 Item item = Items[i];
 
-                if (IsRegular(item))
-                {
-                    ManageRegularItem(item);
-                }
-                else if (IsAgedBrie(item))
-                {
-                    ManageAgedBrie(item);
-                }
-                else if (IsBackstagePasses(item))
-                {
-                    ManageBackstagePasses(item);
-                }
-                else if (IsSulfuras(item))
-                {
-                    ManageSulfuras(item);
-                }
+                ManageRegularItem(item);
+                ManageAgedBrie(item);
+                ManageBackstagePasses(item);
+                ManageSulfuras(item);
             }
         }
 
@@ -65,6 +53,7 @@ namespace csharp
 
         private static void ManageRegularItem(Item item)
         {
+            if (!IsRegular(item)) return;
             item.SellIn--;
             item.Quality--;
 
@@ -81,6 +70,7 @@ namespace csharp
 
         private static void ManageAgedBrie(Item item)
         {
+            if (!IsAgedBrie(item)) return;
             item.SellIn--;
             item.Quality++;
 
@@ -97,6 +87,7 @@ namespace csharp
 
         private static void ManageBackstagePasses(Item item)
         {
+            if (!IsBackstagePasses(item)) return;
             item.SellIn--;
             item.Quality++;
 
@@ -123,7 +114,10 @@ namespace csharp
 
         private static void ManageSulfuras(Item item)
         {
-            item.SellIn--;
+            if (IsSulfuras(item))
+            {
+                item.SellIn--;
+            }
         }
     }
 }
