@@ -47,7 +47,7 @@ namespace GildedRoseTests
             Assert.AreEqual(23, item.Quality);
         }
 
-        /* Checking if the quality degrades twice as fast once the sellIn is past */
+        /* Checking if the quality of an item can't be negative */
         [Test]
         public void RegularItem_QualityCantBeNegative()
         {
@@ -55,12 +55,20 @@ namespace GildedRoseTests
             Assert.AreEqual(0, item.Quality);
         }
 
-        /* Checking if the quality degrades twice as fast once the sellIn is past */
+        /* Checking if the quality of the Aged Brie increases with time */
         [Test]
         public void AgedBrie_QualityIncreases()
         {
             var item = CreateAndUpdateItem("Aged Brie", 15, 10);
             Assert.AreEqual(11, item.Quality);
+        }
+
+        /* Checking if the quality can't be more than 50 */
+        [Test]
+        public void AgedBrie_QualityCantBeMoreThan50()
+        {
+            var item = CreateAndUpdateItem("Aged Brie", 10, 50);
+            Assert.AreEqual(50, item.Quality);
         }
     }
 }
