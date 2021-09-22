@@ -29,7 +29,7 @@ namespace csharp
                     {
                         if (!IsSulfuras(item))
                         {
-                            item.Quality = item.Quality - 1;
+                            item.Quality--;
                         }
                     }
                 }
@@ -37,7 +37,7 @@ namespace csharp
                 {
                     if (item.Quality < 50)
                     {
-                        item.Quality = item.Quality + 1;
+                        item.Quality++;
 
                         if (IsBackstagePasses(item))
                         {
@@ -45,7 +45,7 @@ namespace csharp
                             {
                                 if (item.Quality < MaximumQuality)
                                 {
-                                    item.Quality = item.Quality + 1;
+                                    item.Quality++;
                                 }
                             }
 
@@ -53,7 +53,7 @@ namespace csharp
                             {
                                 if (item.Quality < MaximumQuality)
                                 {
-                                    item.Quality = item.Quality + 1;
+                                    item.Quality++;
                                 }
                             }
                         }
@@ -62,7 +62,7 @@ namespace csharp
 
                 if (!IsSulfuras(item))
                 {
-                    item.SellIn = item.SellIn - 1;
+                    item.SellIn--;
                 }
 
                 if (item.SellIn < 0)
@@ -75,20 +75,20 @@ namespace csharp
                             {
                                 if (!IsSulfuras(item))
                                 {
-                                    item.Quality = item.Quality - 1;
+                                    item.Quality--;
                                 }
                             }
                         }
                         else
                         {
-                            item.Quality = item.Quality - item.Quality;
+                            item.Quality = 0;
                         }
                     }
                     else
                     {
                         if (item.Quality < MaximumQuality)
                         {
-                            item.Quality = item.Quality + 1;
+                            item.Quality++;
                         }
                     }
                 }
