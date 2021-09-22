@@ -34,17 +34,25 @@ namespace GildedRoseTests
         [Test]
         public void RegularItem_SellInAndQualityLower()
         {
-            var item = CreateAndUpdateItem("test", 15, 25);
+            var item = CreateAndUpdateItem("regularItem", 15, 25);
             Assert.AreEqual(14, item.SellIn);
             Assert.AreEqual(24, item.Quality);
         }
 
-        /* Checking if the quality degrades twice as fast once the sellin is past */
+        /* Checking if the quality degrades twice as fast once the sellIn is past */
         [Test]
         public void RegularItem_PastSellIn_QualityLowerTwice()
         {
-            var item = CreateAndUpdateItem("testSellInPast", 0, 25);
+            var item = CreateAndUpdateItem("regularItem", 0, 25);
             Assert.AreEqual(23, item.Quality);
+        }
+
+        /* Checking if the quality degrades twice as fast once the sellIn is past */
+        [Test]
+        public void AgedBrie_QualityIncreases()
+        {
+            var item = CreateAndUpdateItem("Aged Brie", 15, 10);
+            Assert.AreEqual(11, item.Quality);
         }
     }
 }
