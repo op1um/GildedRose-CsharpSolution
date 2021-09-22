@@ -20,10 +20,8 @@ namespace csharp
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                Item item = Items[i];
-
                 ManageRegularItem(item);
                 ManageAgedBrie(item);
                 ManageBackstagePasses(item);
@@ -51,15 +49,30 @@ namespace csharp
             return item.Name.Equals(BackstagePasses);
         }
 
+        private static void DecreaseSellIn(Item item)
+        {
+            item.SellIn--;
+        }
+
+        private static void DecreaseQuality(Item item)
+        {
+            item.Quality--;
+        }
+
+        private static void IncreaseQuality(Item item)
+        {
+            item.Quality++;
+        }
+
         private static void ManageRegularItem(Item item)
         {
             if (!IsRegular(item)) return;
-            item.SellIn--;
-            item.Quality--;
+            DecreaseSellIn(item);
+            DecreaseQuality(item);
 
             if (item.SellIn <= 0)
             {
-                item.Quality--;
+                DecreaseQuality(item);
             }
 
             if (item.Quality < 0)
@@ -71,12 +84,12 @@ namespace csharp
         private static void ManageAgedBrie(Item item)
         {
             if (!IsAgedBrie(item)) return;
-            item.SellIn--;
-            item.Quality++;
+            DecreaseSellIn(item);
+            IncreaseQuality(item);
 
             if (item.SellIn <= 0)
             {
-                item.Quality++;
+                IncreaseQuality(item);
             }
 
             if (item.Quality > MaximumQuality)
@@ -88,17 +101,17 @@ namespace csharp
         private static void ManageBackstagePasses(Item item)
         {
             if (!IsBackstagePasses(item)) return;
-            item.SellIn--;
-            item.Quality++;
+            DecreaseSellIn(item);
+            IncreaseQuality(item);
 
             if (item.SellIn < BackstagePassesFirstThreshold)
             {
-                item.Quality++;
+                IncreaseQuality(item);
             }
 
             if (item.SellIn < BackstagePassesSecondThreshold)
             {
-                item.Quality++;
+                IncreaseQuality(item);
             }
 
             if (item.SellIn <= 0)
@@ -116,7 +129,7 @@ namespace csharp
         {
             if (IsSulfuras(item))
             {
-                item.SellIn--;
+                DecreaseSellIn(item);
             }
         }
     }
