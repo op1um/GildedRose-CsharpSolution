@@ -78,5 +78,13 @@ namespace GildedRoseTests
             var item = CreateAndUpdateItem("Sulfuras, Hand of Ragnaros", 10, 80);
             Assert.AreEqual(80, item.Quality);
         }
+
+        /* Checking if Backstage passes quality increases */
+        [Test]
+        public void BackstagePasses_QualityIncrease()
+        {
+            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 15, 20);
+            Assert.AreEqual(21, item.Quality);
+        }
     }
 }
