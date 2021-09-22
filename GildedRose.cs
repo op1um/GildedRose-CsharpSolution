@@ -79,6 +79,10 @@ namespace csharp
                         item.Quality = MaximumQuality;
                     }
                 }
+                else if (IsSulfuras(item))
+                {
+                    item.SellIn--;
+                }
                 else
                 {
                     if (!(IsAgedBrie(item) || IsBackstagePasses(item)))
