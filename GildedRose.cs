@@ -54,7 +54,31 @@ namespace csharp
                         item.Quality = MaximumQuality;
                     }
                 }
+                else if (IsBackstagePasses(item))
+                {
+                    item.SellIn--;
+                    item.Quality++;
 
+                    if (item.SellIn < BackstagePassesFirstThreshold)
+                    {
+                        item.Quality++;
+                    }
+
+                    if (item.SellIn < BackstagePassesSecondThreshold)
+                    {
+                        item.Quality++;
+                    }
+
+                    if (item.SellIn <= 0)
+                    {
+                        item.Quality = 0;
+                    }
+
+                    if (item.Quality > MaximumQuality)
+                    {
+                        item.Quality = MaximumQuality;
+                    }
+                }
                 else
                 {
                     if (!(IsAgedBrie(item) || IsBackstagePasses(item)))
