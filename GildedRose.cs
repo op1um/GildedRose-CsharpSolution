@@ -23,11 +23,11 @@ namespace csharp
             {
                 Item item = Items[i];
 
-                if (item.Name != AgedBrie && item.Name != BackstagePasses)
+                if (!IsAgedBrie(item) && !IsBackstagePasses(item))
                 {
                     if (item.Quality > 0)
                     {
-                        if (item.Name != Sulfuras)
+                        if (!IsSulfuras(item))
                         {
                             item.Quality = item.Quality - 1;
                         }
@@ -39,7 +39,7 @@ namespace csharp
                     {
                         item.Quality = item.Quality + 1;
 
-                        if (item.Name == BackstagePasses)
+                        if (IsBackstagePasses(item))
                         {
                             if (item.SellIn < BackstagePassesFirstThreshold)
                             {
@@ -60,20 +60,20 @@ namespace csharp
                     }
                 }
 
-                if (item.Name != Sulfuras)
+                if (!IsSulfuras(item))
                 {
                     item.SellIn = item.SellIn - 1;
                 }
 
                 if (item.SellIn < 0)
                 {
-                    if (item.Name != AgedBrie)
+                    if (!IsAgedBrie(item))
                     {
-                        if (item.Name != BackstagePasses)
+                        if (!IsBackstagePasses(item))
                         {
                             if (item.Quality > 0)
                             {
-                                if (item.Name != Sulfuras)
+                                if (!IsSulfuras(item))
                                 {
                                     item.Quality = item.Quality - 1;
                                 }
@@ -93,6 +93,21 @@ namespace csharp
                     }
                 }
             }
+        }
+
+        private static bool IsAgedBrie(Item item)
+        {
+            return item.Name.Equals(AgedBrie);
+        }
+
+        private static bool IsSulfuras(Item item)
+        {
+            return item.Name.Equals(Sulfuras);
+        }
+
+        private static bool IsBackstagePasses(Item item)
+        {
+            return item.Name.Equals(BackstagePasses);
         }
     }
 }
