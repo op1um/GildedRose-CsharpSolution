@@ -23,7 +23,7 @@ namespace csharp
             {
                 Item item = Items[i];
 
-                if (!IsAgedBrie(item) && !IsBackstagePasses(item))
+                if (!(IsAgedBrie(item) || IsBackstagePasses(item)))
                 {
                     if (item.Quality > 0)
                     {
