@@ -69,7 +69,7 @@ namespace GildedRoseTests
         [Test]
         public void AgedBrie_QualityIncrease()
         {
-            var item = CreateAndUpdateItem("Aged Brie", 15, 10);
+            var item = CreateAndUpdateItem(GildedRose.AgedBrie, 15, 10);
             Assert.AreEqual(11, item.Quality);
         }
 
@@ -77,7 +77,7 @@ namespace GildedRoseTests
         [Test]
         public void AgedBrie_PassedSellIn_QualityIncreaseTwice()
         {
-            var item = CreateAndUpdateItem("Aged Brie", 0, 10);
+            var item = CreateAndUpdateItem(GildedRose.AgedBrie, 0, 10);
             Assert.AreEqual(12, item.Quality);
         }
 
@@ -85,7 +85,7 @@ namespace GildedRoseTests
         [Test]
         public void AgedBrie_QualityCantBeMoreThan50()
         {
-            var item = CreateAndUpdateItem("Aged Brie", 10, 50);
+            var item = CreateAndUpdateItem(GildedRose.AgedBrie, 10, 50);
             Assert.AreEqual(50, item.Quality);
         }
 
@@ -93,7 +93,7 @@ namespace GildedRoseTests
         [Test]
         public void AgedBrie_PassedSellIn_QualityCantBeMoreThan50()
         {
-            var item = CreateAndUpdateItem("Aged Brie", 0, 49);
+            var item = CreateAndUpdateItem(GildedRose.AgedBrie, 0, 49);
             Assert.AreEqual(50, item.Quality);
         }
 
@@ -101,7 +101,7 @@ namespace GildedRoseTests
         [Test]
         public void Sulfuras_QualityNeverDecrease()
         {
-            var item = CreateAndUpdateItem("Sulfuras, Hand of Ragnaros", 10, 80);
+            var item = CreateAndUpdateItem(GildedRose.Sulfuras, 10, 80);
             Assert.AreEqual(80, item.Quality);
         }
 
@@ -109,7 +109,7 @@ namespace GildedRoseTests
         [Test]
         public void Sulfuras_PassedSellIn_QualityNeverDecrease()
         {
-            var item = CreateAndUpdateItem("Sulfuras, Hand of Ragnaros", -1, 80);
+            var item = CreateAndUpdateItem(GildedRose.Sulfuras, -1, 80);
             Assert.AreEqual(80, item.Quality);
         }
 
@@ -117,7 +117,7 @@ namespace GildedRoseTests
         [Test]
         public void BackstagePasses_QualityIncrease()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 15, 20);
+            var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 15, 20);
             Assert.AreEqual(21, item.Quality);
         }
 
@@ -125,7 +125,7 @@ namespace GildedRoseTests
         [Test]
         public void BackstagePasses_10DaysBeforeTheConcert_QualityIncreaseTwice()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 10, 20);
+            var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 10, 20);
             Assert.AreEqual(22, item.Quality);
         }
 
@@ -133,7 +133,7 @@ namespace GildedRoseTests
         [Test]
         public void BackstagePasses_5DaysBeforeTheConcert_QualityIncreaseThrice()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 5, 20);
+            var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 5, 20);
             Assert.AreEqual(23, item.Quality);
         }
 
@@ -141,7 +141,7 @@ namespace GildedRoseTests
         [Test]
         public void BackstagePasses_AfterTheConcert_QualityDropsTo0()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 0, 20);
+            var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 0, 20);
             Assert.AreEqual(0, item.Quality);
         }
 
@@ -149,7 +149,7 @@ namespace GildedRoseTests
         [Test]
         public void BackstagePasses_10DaysBeforeTheConcert_QualityCantBeMoreThan50()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 10, 49);
+            var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 10, 49);
             Assert.AreEqual(50, item.Quality);
         }
 
@@ -157,7 +157,7 @@ namespace GildedRoseTests
         [Test]
         public void BackstagePasses_5DaysBeforeTheConcert_QualityCantBeMoreThan50()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 5, 48);
+            var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 5, 48);
             Assert.AreEqual(50, item.Quality);
         }
     }
