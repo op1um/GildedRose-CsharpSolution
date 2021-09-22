@@ -7,6 +7,20 @@ namespace GildedRoseTests
     [TestFixture]
     public class ApprovalTests
     {
+
+        // item creation method to respect the DRY principle
+        private Item CreateAndUpdateItem(string name, int sellIn, int quality)
+        {
+            IList<Item> items = new List<Item> { new Item
+                {
+                    Name = name, SellIn = sellIn, Quality = quality
+                }
+            };
+            GildedRose gildedRose = new GildedRose(items);
+            gildedRose.UpdateQuality();
+            return items[0];
+        }
+
         //First test to check if the unit testing framework is running fine
         [Test]
         public void BasicTest()
