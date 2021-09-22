@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NUnit.Framework.Interfaces;
 
 namespace csharp
 {
@@ -23,76 +24,100 @@ namespace csharp
             {
                 Item item = Items[i];
 
-                if (!(IsAgedBrie(item) || IsBackstagePasses(item)))
-                {
-                    if (item.Quality > 0)
-                    {
-                        if (!IsSulfuras(item))
-                        {
-                            item.Quality--;
-                        }
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality++;
-
-                        if (IsBackstagePasses(item))
-                        {
-                            if (item.SellIn < BackstagePassesFirstThreshold)
-                            {
-                                if (item.Quality < MaximumQuality)
-                                {
-                                    item.Quality++;
-                                }
-                            }
-
-                            if (item.SellIn < BackstagePassesSecondThreshold)
-                            {
-                                if (item.Quality < MaximumQuality)
-                                {
-                                    item.Quality++;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (!IsSulfuras(item))
+                if (isRegular(item))
                 {
                     item.SellIn--;
+                    item.Quality--;
+
+                    if (item.SellIn <= 0)
+                    {
+                        item.Quality--;
+                    }
+
+                    if (item.Quality < 0)
+                    {
+                        item.Quality = 0;
+                    }
                 }
 
-                if (item.SellIn < 0)
+                else
                 {
-                    if (!IsAgedBrie(item))
+                    if (!(IsAgedBrie(item) || IsBackstagePasses(item)))
                     {
-                        if (!IsBackstagePasses(item))
+                        if (item.Quality > 0)
                         {
-                            if (item.Quality > 0)
+                            if (!IsSulfuras(item))
                             {
-                                if (!IsSulfuras(item))
-                                {
-                                    item.Quality--;
-                                }
+                                item.Quality--;
                             }
-                        }
-                        else
-                        {
-                            item.Quality = 0;
                         }
                     }
                     else
                     {
-                        if (item.Quality < MaximumQuality)
+                        if (item.Quality < 50)
                         {
                             item.Quality++;
+
+                            if (IsBackstagePasses(item))
+                            {
+                                if (item.SellIn < BackstagePassesFirstThreshold)
+                                {
+                                    if (item.Quality < MaximumQuality)
+                                    {
+                                        item.Quality++;
+                                    }
+                                }
+
+                                if (item.SellIn < BackstagePassesSecondThreshold)
+                                {
+                                    if (item.Quality < MaximumQuality)
+                                    {
+                                        item.Quality++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (!IsSulfuras(item))
+                    {
+                        item.SellIn--;
+                    }
+
+                    if (item.SellIn < 0)
+                    {
+                        if (!IsAgedBrie(item))
+                        {
+                            if (!IsBackstagePasses(item))
+                            {
+                                if (item.Quality > 0)
+                                {
+                                    if (!IsSulfuras(item))
+                                    {
+                                        item.Quality--;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                item.Quality = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (item.Quality < MaximumQuality)
+                            {
+                                item.Quality++;
+                            }
                         }
                     }
                 }
             }
+        }
+
+        private static bool isRegular(Item item)
+        {
+            return !(IsAgedBrie(item) || IsBackstagePasses(item) || IsSulfuras(item));
         }
 
         private static bool IsAgedBrie(Item item)
