@@ -49,6 +49,14 @@ namespace GildedRoseTests
 
         /* Checking if the quality degrades twice as fast once the sellIn is past */
         [Test]
+        public void RegularItem_QualityCantBeNegative()
+        {
+            var item = CreateAndUpdateItem("regularItem", 3, 0);
+            Assert.AreEqual(0, item.Quality);
+        }
+
+        /* Checking if the quality degrades twice as fast once the sellIn is past */
+        [Test]
         public void AgedBrie_QualityIncreases()
         {
             var item = CreateAndUpdateItem("Aged Brie", 15, 10);
