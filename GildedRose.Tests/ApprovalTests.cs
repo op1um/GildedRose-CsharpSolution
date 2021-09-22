@@ -30,5 +30,19 @@ namespace GildedRoseTests
             Assert.AreEqual(14, items[0].SellIn);
             Assert.AreEqual(24, items[0].Quality);
         }
+
+        /* Checking if the quality degrades twice as fast once the sellin is past */
+        [Test]
+        public void RegularItem_PastSellIn_QualityLowerTwice()
+        {
+            IList<Item> items = new List<Item> { new Item
+                {
+                    Name = "testSellInPast", SellIn = 0, Quality = 25 }
+
+            };
+            GildedRose gildedRose = new GildedRose(items);
+            gildedRose.UpdateQuality();
+            Assert.AreEqual(23, items[0].Quality);
+        }
     }
 }
