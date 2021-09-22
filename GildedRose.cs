@@ -7,6 +7,9 @@ namespace csharp
         public const string AgedBrie = "Aged Brie";
         public const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         public const string BackstagePasses = "Backstage passes to a TAFKAL80ETC concert";
+        public const int MaximumQuality = 50;
+        public const int BackstagePassesFirstThreshold = 11;
+        public const int BackstagePassesSecondThreshold = 6;
         IList<Item> Items;
 
         public GildedRose(IList<Item> Items)
@@ -36,17 +39,17 @@ namespace csharp
 
                         if (Items[i].Name == BackstagePasses)
                         {
-                            if (Items[i].SellIn < 11)
+                            if (Items[i].SellIn < BackstagePassesFirstThreshold)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].Quality < MaximumQuality)
                                 {
                                     Items[i].Quality = Items[i].Quality + 1;
                                 }
                             }
 
-                            if (Items[i].SellIn < 6)
+                            if (Items[i].SellIn < BackstagePassesSecondThreshold)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].Quality < MaximumQuality)
                                 {
                                     Items[i].Quality = Items[i].Quality + 1;
                                 }
@@ -81,7 +84,7 @@ namespace csharp
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        if (Items[i].Quality < MaximumQuality)
                         {
                             Items[i].Quality = Items[i].Quality + 1;
                         }

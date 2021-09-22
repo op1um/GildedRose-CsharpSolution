@@ -81,20 +81,20 @@ namespace GildedRoseTests
             Assert.AreEqual(12, item.Quality);
         }
 
-        /* Checking if the quality of Aged Brie can't be more than 50 */
+        /* Checking if the quality of Aged Brie can't be more than GildedRose.MaximumQuality */
         [Test]
-        public void AgedBrie_QualityCantBeMoreThan50()
+        public void AgedBrie_QualityCantBeMoreThanMaximumQuality()
         {
-            var item = CreateAndUpdateItem(GildedRose.AgedBrie, 10, 50);
-            Assert.AreEqual(50, item.Quality);
+            var item = CreateAndUpdateItem(GildedRose.AgedBrie, 10, GildedRose.MaximumQuality);
+            Assert.AreEqual(GildedRose.MaximumQuality, item.Quality);
         }
 
-        /* Checking if the quality of the Aged Brie can't be more then 50 even past SellIn */
+        /* Checking if the quality of the Aged Brie can't be more then GildedRose.MaximumQuality even past SellIn */
         [Test]
-        public void AgedBrie_PassedSellIn_QualityCantBeMoreThan50()
+        public void AgedBrie_PassedSellIn_QualityCantBeMoreThanMaximumQuality()
         {
             var item = CreateAndUpdateItem(GildedRose.AgedBrie, 0, 49);
-            Assert.AreEqual(50, item.Quality);
+            Assert.AreEqual(GildedRose.MaximumQuality, item.Quality);
         }
 
         /* Checking if Sulfuras quality never decrease */
@@ -145,20 +145,20 @@ namespace GildedRoseTests
             Assert.AreEqual(0, item.Quality);
         }
 
-        /* Checking if Backstage passes quality can't be more than 50 even 10 days before the show */
+        /* Checking if Backstage passes quality can't be more than GildedRose.MaximumQuality even 10 days before the show */
         [Test]
-        public void BackstagePasses_10DaysBeforeTheConcert_QualityCantBeMoreThan50()
+        public void BackstagePasses_10DaysBeforeTheConcert_QualityCantBeMoreThanMaximumQuality()
         {
             var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 10, 49);
-            Assert.AreEqual(50, item.Quality);
+            Assert.AreEqual(GildedRose.MaximumQuality, item.Quality);
         }
 
-        /* Checking if Backstage passes quality can't be more then 50 even 5 days before the show */
+        /* Checking if Backstage passes quality can't be more then GildedRose.MaximumQuality even 5 days before the show */
         [Test]
-        public void BackstagePasses_5DaysBeforeTheConcert_QualityCantBeMoreThan50()
+        public void BackstagePasses_5DaysBeforeTheConcert_QualityCantBeMoreThanMaximumQuality()
         {
             var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 5, 48);
-            Assert.AreEqual(50, item.Quality);
+            Assert.AreEqual(GildedRose.MaximumQuality, item.Quality);
         }
     }
 }
