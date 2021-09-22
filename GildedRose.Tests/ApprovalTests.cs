@@ -102,5 +102,15 @@ namespace GildedRoseTests
             var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 0, 20);
             Assert.AreEqual(0, item.Quality);
         }
+
+        /* With only 92% test coverage, we need to create some additional tests to check some particular case */
+
+        /* Checking if the quality of the Aged Brie increases with time */
+        [Test]
+        public void AgedBrie_PastSellIn_QualityIncreaseTwice()
+        {
+            var item = CreateAndUpdateItem("Aged Brie", 0, 10);
+            Assert.AreEqual(12, item.Quality);
+        }
     }
 }
