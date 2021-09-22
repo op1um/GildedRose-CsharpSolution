@@ -8,7 +8,7 @@ namespace GildedRoseTests
     public class ApprovalTests
     {
 
-        // item creation method to respect the DRY principle
+        /* item creation method to respect the DRY principle */
         private Item CreateAndUpdateItem(string name, int sellIn, int quality)
         {
             IList<Item> items = new List<Item> { new Item
@@ -21,7 +21,7 @@ namespace GildedRoseTests
             return items[0];
         }
 
-        //First test to check if the unit testing framework is running fine
+        /* First test to check if the unit testing framework is running fine */
         [Test]
         public void BasicTest()
         {
@@ -31,6 +31,8 @@ namespace GildedRoseTests
         /* Since we can't know what the app does, even if the business says the app
         already does everything they want. We need unit tests to check if this is true and to make sure
         we don't make any regression during the refactoring */
+
+        /* Checking if the quality of an item degrades with time */
         [Test]
         public void RegularItem_SellInAndQualityLower()
         {
@@ -55,6 +57,14 @@ namespace GildedRoseTests
             Assert.AreEqual(0, item.Quality);
         }
 
+        /* Checking if the quality of an item can't be negative even past sellIn */
+        [Test]
+        public void RegularItem_PassedSellIn_QualityCantBeNegative()
+        {
+            var item = CreateAndUpdateItem("regularItem", -1, 0);
+            Assert.AreEqual(0, item.Quality);
+        }
+
         /* Checking if the quality of the Aged Brie increases with time */
         [Test]
         public void AgedBrie_QualityIncrease()
@@ -63,11 +73,27 @@ namespace GildedRoseTests
             Assert.AreEqual(11, item.Quality);
         }
 
-        /* Checking if the quality can't be more than 50 */
+        /* Checking if the quality of the Aged Brie Increase twice once SellIn is passed */
+        [Test]
+        public void AgedBrie_PassedSellIn_QualityIncreaseTwice()
+        {
+            var item = CreateAndUpdateItem("Aged Brie", 0, 10);
+            Assert.AreEqual(12, item.Quality);
+        }
+
+        /* Checking if the quality of Aged Brie can't be more than 50 */
         [Test]
         public void AgedBrie_QualityCantBeMoreThan50()
         {
             var item = CreateAndUpdateItem("Aged Brie", 10, 50);
+            Assert.AreEqual(50, item.Quality);
+        }
+
+        /* Checking if the quality of the Aged Brie can't be more then 50 even past SellIn */
+        [Test]
+        public void AgedBrie_PassedSellIn_QualityCantBeMoreThan50()
+        {
+            var item = CreateAndUpdateItem("Aged Brie", 0, 49);
             Assert.AreEqual(50, item.Quality);
         }
 
@@ -76,6 +102,14 @@ namespace GildedRoseTests
         public void Sulfuras_QualityNeverDecrease()
         {
             var item = CreateAndUpdateItem("Sulfuras, Hand of Ragnaros", 10, 80);
+            Assert.AreEqual(80, item.Quality);
+        }
+
+        /* Checking if Sulfuras quality never decrease even when sellIn is passed */
+        [Test]
+        public void Sulfuras_PassedSellIn_QualityNeverDecrease()
+        {
+            var item = CreateAndUpdateItem("Sulfuras, Hand of Ragnaros", -1, 80);
             Assert.AreEqual(80, item.Quality);
         }
 
@@ -95,6 +129,14 @@ namespace GildedRoseTests
             Assert.AreEqual(22, item.Quality);
         }
 
+        /* Checking if Backstage passes quality increases thrice 5 days before the show */
+        [Test]
+        public void BackstagePasses_5DaysBeforeTheConcert_QualityIncreaseThrice()
+        {
+            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 5, 20);
+            Assert.AreEqual(23, item.Quality);
+        }
+
         /* Checking if Backstage passes quality drops to 0 after the show */
         [Test]
         public void BackstagePasses_AfterTheConcert_QualityDropsTo0()
@@ -103,17 +145,7 @@ namespace GildedRoseTests
             Assert.AreEqual(0, item.Quality);
         }
 
-        /* With only 92% test coverage, we need to create some additional tests to check some particular case */
-
-        /* Checking if the quality of the Aged Brie Increase twice once SellIn is passed */
-        [Test]
-        public void AgedBrie_PassedSellIn_QualityIncreaseTwice()
-        {
-            var item = CreateAndUpdateItem("Aged Brie", 0, 10);
-            Assert.AreEqual(12, item.Quality);
-        }
-
-        /* Checking if Backstage passes quality increases twice 10 days before the show */
+        /* Checking if Backstage passes quality can't be more than 50 even 10 days before the show */
         [Test]
         public void BackstagePasses_10DaysBeforeTheConcert_QualityCantBeMoreThan50()
         {
@@ -121,12 +153,12 @@ namespace GildedRoseTests
             Assert.AreEqual(50, item.Quality);
         }
 
-        /* Checking if Backstage passes quality increases twice 10 days before the show */
+        /* Checking if Backstage passes quality can't be more then 50 even 5 days before the show */
         [Test]
-        public void BackstagePasses_5DaysBeforeTheConcert_QualityIncreaseThrice()
+        public void BackstagePasses_5DaysBeforeTheConcert_QualityCantBeMoreThan50()
         {
-            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 5, 20);
-            Assert.AreEqual(23, item.Quality);
+            var item = CreateAndUpdateItem("Backstage passes to a TAFKAL80ETC concert", 5, 48);
+            Assert.AreEqual(50, item.Quality);
         }
     }
 }
