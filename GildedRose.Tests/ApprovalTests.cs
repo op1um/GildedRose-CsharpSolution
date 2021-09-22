@@ -57,7 +57,7 @@ namespace GildedRoseTests
 
         /* Checking if the quality of the Aged Brie increases with time */
         [Test]
-        public void AgedBrie_QualityIncreases()
+        public void AgedBrie_QualityIncrease()
         {
             var item = CreateAndUpdateItem("Aged Brie", 15, 10);
             Assert.AreEqual(11, item.Quality);
@@ -69,6 +69,14 @@ namespace GildedRoseTests
         {
             var item = CreateAndUpdateItem("Aged Brie", 10, 50);
             Assert.AreEqual(50, item.Quality);
+        }
+
+        /* Checking if Sulfuras quality never decrease */
+        [Test]
+        public void Sulfuras_QualityNeverDecrease()
+        {
+            var item = CreateAndUpdateItem("Sulfuras, Hand of Ragnaros", 10, 80);
+            Assert.AreEqual(80, item.Quality);
         }
     }
 }
