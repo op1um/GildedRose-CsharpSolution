@@ -160,5 +160,29 @@ namespace GildedRoseTests
             var item = CreateAndUpdateItem(GildedRose.BackstagePasses, 5, 48);
             Assert.AreEqual(GildedRose.MaximumQuality, item.Quality);
         }
+
+        /* Checking if Conjured items quality degrades twice as fast */
+        [Test]
+        public void ConjuredItem_QualityLowerTwice()
+        {
+            var item = CreateAndUpdateItem(GildedRose.ConjuredItem, 15, 25);
+            Assert.AreEqual(23, item.Quality);
+        }
+
+        /* Checking if Conjured items quality degrades twice as fast passed SellIn */
+        [Test]
+        public void ConjuredItem_PassedSellIn_QualityLowerTwice()
+        {
+            var item = CreateAndUpdateItem(GildedRose.ConjuredItem, 0, 25);
+            Assert.AreEqual(21, item.Quality);
+        }
+
+        /* Checking if Conjured items quality can't be negative */
+        [Test]
+        public void ConjuredItem_QualityCantBeNegative()
+        {
+            var item = CreateAndUpdateItem(GildedRose.ConjuredItem, 10, 0);
+            Assert.AreEqual(0, item.Quality);
+        }
     }
 }

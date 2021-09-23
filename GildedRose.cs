@@ -8,6 +8,7 @@ namespace csharp
         public const string AgedBrie = "Aged Brie";
         public const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         public const string BackstagePasses = "Backstage passes to a TAFKAL80ETC concert";
+        public const string ConjuredItem = "Conjured Mana Cake";
         public const int MaximumQuality = 50;
         public const int BackstagePassesFirstThreshold = 11;
         public const int BackstagePassesSecondThreshold = 6;
@@ -26,12 +27,13 @@ namespace csharp
                 ManageAgedBrie(item);
                 ManageBackstagePasses(item);
                 ManageSulfuras(item);
+                ManageConjured(item);
             }
         }
 
         private static bool IsRegular(Item item)
         {
-            return !(IsAgedBrie(item) || IsBackstagePasses(item) || IsSulfuras(item));
+            return !(IsAgedBrie(item) || IsBackstagePasses(item) || IsSulfuras(item) || IsConjured(item));
         }
 
         private static bool IsAgedBrie(Item item)
@@ -47,6 +49,11 @@ namespace csharp
         private static bool IsBackstagePasses(Item item)
         {
             return item.Name.Equals(BackstagePasses);
+        }
+
+        private static bool IsConjured(Item item)
+        {
+            return item.Name.Equals(ConjuredItem);
         }
 
         private static void DecreaseSellIn(Item item)
@@ -130,6 +137,27 @@ namespace csharp
             if (IsSulfuras(item))
             {
                 DecreaseSellIn(item);
+            }
+        }
+
+        private static void ManageConjured(Item item)
+        {
+            if (IsConjured(item))
+            {
+                DecreaseSellIn(item);
+                DecreaseQuality(item);
+                DecreaseQuality(item);
+
+                if (item.SellIn <= 0)
+                {
+                    DecreaseQuality(item);
+                    DecreaseQuality(item);
+                }
+
+                if (item.Quality < 0)
+                {
+                    item.Quality = 0;
+                }
             }
         }
     }
