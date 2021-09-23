@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework.Interfaces;
 
 namespace csharp
 {
@@ -12,7 +11,7 @@ namespace csharp
         public const int MaximumQuality = 50;
         public const int BackstagePassesFirstThreshold = 11;
         public const int BackstagePassesSecondThreshold = 6;
-        IList<Item> Items;
+        readonly IList<Item> Items;
 
         public GildedRose(IList<Item> Items)
         {

@@ -9,14 +9,14 @@ namespace GildedRoseTests
     {
 
         /* item creation method to respect the DRY principle */
-        private Item CreateAndUpdateItem(string name, int sellIn, int quality)
+        private static Item CreateAndUpdateItem(string name, int sellIn, int quality)
         {
             IList<Item> items = new List<Item> { new Item
                 {
                     Name = name, SellIn = sellIn, Quality = quality
                 }
             };
-            GildedRose gildedRose = new GildedRose(items);
+            GildedRose gildedRose = new(items);
             gildedRose.UpdateQuality();
             return items[0];
         }
