@@ -77,15 +77,9 @@ namespace csharp
             DecreaseSellIn(item);
             DecreaseQuality(item);
 
-            if (item.SellIn <= 0)
-            {
-                DecreaseQuality(item);
-            }
+            if (item.SellIn <= 0) DecreaseQuality(item);
 
-            if (item.Quality < 0)
-            {
-                item.Quality = 0;
-            }
+            if (item.Quality < 0) item.Quality = 0;
         }
 
         private static void ManageAgedBrie(Item item)
@@ -94,15 +88,9 @@ namespace csharp
             DecreaseSellIn(item);
             IncreaseQuality(item);
 
-            if (item.SellIn <= 0)
-            {
-                IncreaseQuality(item);
-            }
+            if (item.SellIn <= 0) IncreaseQuality(item);
 
-            if (item.Quality > MaximumQuality)
-            {
-                item.Quality = MaximumQuality;
-            }
+            if (item.Quality > MaximumQuality) item.Quality = MaximumQuality;
         }
 
         private static void ManageBackstagePasses(Item item)
@@ -111,54 +99,34 @@ namespace csharp
             DecreaseSellIn(item);
             IncreaseQuality(item);
 
-            if (item.SellIn < BackstagePassesFirstThreshold)
-            {
-                IncreaseQuality(item);
-            }
+            if (item.SellIn < BackstagePassesFirstThreshold) IncreaseQuality(item);
 
-            if (item.SellIn < BackstagePassesSecondThreshold)
-            {
-                IncreaseQuality(item);
-            }
+            if (item.SellIn < BackstagePassesSecondThreshold) IncreaseQuality(item);
 
-            if (item.SellIn <= 0)
-            {
-                item.Quality = 0;
-            }
+            if (item.SellIn <= 0) item.Quality = 0;
 
-            if (item.Quality > MaximumQuality)
-            {
-                item.Quality = MaximumQuality;
-            }
+            if (item.Quality > MaximumQuality) item.Quality = MaximumQuality;
         }
 
         private static void ManageSulfuras(Item item)
         {
-            if (IsSulfuras(item))
-            {
-                DecreaseSellIn(item);
-            }
+            if (IsSulfuras(item)) DecreaseSellIn(item);
         }
 
         private static void ManageConjured(Item item)
         {
-            if (IsConjured(item))
+            if (!IsConjured(item)) return;
+            DecreaseSellIn(item);
+            DecreaseQuality(item);
+            DecreaseQuality(item);
+
+            if (item.SellIn <= 0)
             {
-                DecreaseSellIn(item);
                 DecreaseQuality(item);
                 DecreaseQuality(item);
-
-                if (item.SellIn <= 0)
-                {
-                    DecreaseQuality(item);
-                    DecreaseQuality(item);
-                }
-
-                if (item.Quality < 0)
-                {
-                    item.Quality = 0;
-                }
             }
+
+            if (item.Quality < 0) item.Quality = 0;
         }
     }
 }
