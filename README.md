@@ -52,7 +52,7 @@ items in a console.
 
 In the solution explorer, right click on the GildedRoseTests project and choose the "Run Unit Tests" option.
 
-4 Could I have gone any further in the refactoring
+## Could I have gone any further in the refactoring
 
 When you refactor it is hard to know when to stop. To go further, I could remove the switch from the updateQuality() method
 and cast each item into the correct type directly in the constructor. Finally, if the Goblin allows me to alter the item class,
