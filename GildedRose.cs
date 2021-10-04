@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NUnit.Framework.Interfaces;
 
 namespace csharp
 {
@@ -20,9 +21,14 @@ namespace csharp
 
         public void UpdateQuality()
         {
+            GildedRoseFactory factory;
             foreach (var item in Items)
             {
-                ManageRegularItem(item);
+                if(IsRegular(item))
+                {
+                    factory = new Regular(item);
+                    factory.UpdateQuality();
+                }
                 ManageAgedBrie(item);
                 ManageBackstagePasses(item);
                 ManageSulfuras(item);
@@ -68,17 +74,6 @@ namespace csharp
         private static void IncreaseQuality(Item item)
         {
             item.Quality++;
-        }
-
-        private static void ManageRegularItem(Item item)
-        {
-            if (!IsRegular(item)) return;
-            DecreaseSellIn(item);
-            DecreaseQuality(item);
-
-            if (item.SellIn <= 0) DecreaseQuality(item);
-
-            if (item.Quality < 0) item.Quality = 0;
         }
 
         private static void ManageAgedBrie(Item item)
