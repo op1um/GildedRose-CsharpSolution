@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using csharp.Factories;
 using NUnit.Framework.Interfaces;
 
@@ -11,66 +12,36 @@ namespace csharp
         public const string BackstagePasses = "Backstage passes to a TAFKAL80ETC concert";
         public const string ConjuredItem = "Conjured Mana Cake";
         public const int MaximumQuality = 50;
-        public const int BackstagePassesFirstThreshold = 11;
-        public const int BackstagePassesSecondThreshold = 6;
-        readonly IList<Item> Items;
+        private readonly IList<Item> _items;
 
-        public GildedRose(IList<Item> Items)
+        public GildedRose(IList<Item> items)
         {
-            this.Items = Items;
+            _items = items;
         }
 
         public void UpdateQuality()
         {
-            GildedRoseFactory factory;
-            foreach (var item in Items)
+            foreach (var item in _items)
             {
-                if(IsRegular(item))
+                if (item.Name.Equals(Sulfuras)) continue;
+                GildedRoseFactory factory;
+                switch (item.Name)
                 {
-                    factory = new Regular(item);
-                    factory.UpdateQuality();
+                    case AgedBrie:
+                        factory = new AgedBrie(item);
+                        break;
+                    case BackstagePasses:
+                        factory = new BackstagePasses(item);
+                        break;
+                    case ConjuredItem:
+                        factory = new Conjured(item);
+                        break;
+                    default:
+                        factory = new Regular(item);
+                        break;
                 }
-                if (IsAgedBrie(item))
-                {
-                    factory = new AgedBrie(item);
-                    factory.UpdateQuality();
-                }
-                if (IsBackstagePasses(item))
-                {
-                    factory = new BackstagePasses(item);
-                    factory.UpdateQuality();
-                }
-                if (IsConjured(item))
-                {
-                    factory = new Conjured(item);
-                    factory.UpdateQuality();
-                }
+                factory.UpdateQuality();
             }
-        }
-
-        private static bool IsRegular(Item item)
-        {
-            return !(IsAgedBrie(item) || IsBackstagePasses(item) || IsSulfuras(item) || IsConjured(item));
-        }
-
-        private static bool IsAgedBrie(Item item)
-        {
-            return item.Name.Equals(AgedBrie);
-        }
-
-        private static bool IsSulfuras(Item item)
-        {
-            return item.Name.Equals(Sulfuras);
-        }
-
-        private static bool IsBackstagePasses(Item item)
-        {
-            return item.Name.Equals(BackstagePasses);
-        }
-
-        private static bool IsConjured(Item item)
-        {
-            return item.Name.Equals(ConjuredItem);
         }
     }
 }
