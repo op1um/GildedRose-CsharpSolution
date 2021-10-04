@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using csharp.Factories;
 using NUnit.Framework.Interfaces;
 
 namespace csharp
@@ -29,10 +30,21 @@ namespace csharp
                     factory = new Regular(item);
                     factory.UpdateQuality();
                 }
-                ManageAgedBrie(item);
-                ManageBackstagePasses(item);
-                ManageSulfuras(item);
-                ManageConjured(item);
+                if (IsAgedBrie(item))
+                {
+                    factory = new AgedBrie(item);
+                    factory.UpdateQuality();
+                }
+                if (IsBackstagePasses(item))
+                {
+                    factory = new BackstagePasses(item);
+                    factory.UpdateQuality();
+                }
+                if (IsConjured(item))
+                {
+                    factory = new Conjured(item);
+                    factory.UpdateQuality();
+                }
             }
         }
 
@@ -59,68 +71,6 @@ namespace csharp
         private static bool IsConjured(Item item)
         {
             return item.Name.Equals(ConjuredItem);
-        }
-
-        private static void DecreaseSellIn(Item item)
-        {
-            item.SellIn--;
-        }
-
-        private static void DecreaseQuality(Item item)
-        {
-            item.Quality--;
-        }
-
-        private static void IncreaseQuality(Item item)
-        {
-            item.Quality++;
-        }
-
-        private static void ManageAgedBrie(Item item)
-        {
-            if (!IsAgedBrie(item)) return;
-            DecreaseSellIn(item);
-            IncreaseQuality(item);
-
-            if (item.SellIn <= 0) IncreaseQuality(item);
-
-            if (item.Quality > MaximumQuality) item.Quality = MaximumQuality;
-        }
-
-        private static void ManageBackstagePasses(Item item)
-        {
-            if (!IsBackstagePasses(item)) return;
-            DecreaseSellIn(item);
-            IncreaseQuality(item);
-
-            if (item.SellIn < BackstagePassesFirstThreshold) IncreaseQuality(item);
-
-            if (item.SellIn < BackstagePassesSecondThreshold) IncreaseQuality(item);
-
-            if (item.SellIn <= 0) item.Quality = 0;
-
-            if (item.Quality > MaximumQuality) item.Quality = MaximumQuality;
-        }
-
-        private static void ManageSulfuras(Item item)
-        {
-            if (IsSulfuras(item)) DecreaseSellIn(item);
-        }
-
-        private static void ManageConjured(Item item)
-        {
-            if (!IsConjured(item)) return;
-            DecreaseSellIn(item);
-            DecreaseQuality(item);
-            DecreaseQuality(item);
-
-            if (item.SellIn <= 0)
-            {
-                DecreaseQuality(item);
-                DecreaseQuality(item);
-            }
-
-            if (item.Quality < 0) item.Quality = 0;
         }
     }
 }
